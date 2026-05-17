@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Padma ❤️</title>
+    <style>
+        :root { 
+            --gold: #ffd700; 
+            --pink: #ffb6c1; 
+            --white: #ffffff;
+            --dark-pink: #ff1493;
+            --soft-gold: #fff4cc;
+            --vintage-bg: #fff5f7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Georgia', serif; }
+        
+        body { 
+            background: linear-gradient(135deg, var(--vintage-bg) 0%, #ffdde1 100%);
+            color: #444; text-align: center; overflow-x: hidden; 
+        }
+
+        /* Opening Screen Overlay */
+        #surprise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, var(--pink), var(--soft-gold), var(--pink));
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; cursor: pointer; transition: 1s ease-out;
+        }
+        .opening-box {
+            padding: 50px 40px; border: 5px double var(--dark-pink); border-radius: 30px;
+            background: rgba(255, 255, 255, 0.85); box-shadow: 0 0 50px rgba(255, 20, 147, 0.3);
+            animation: pulse 2s infinite;
+        }
+        .opening-text { font-size: 2.8rem; color: var(--dark-pink); font-weight: bold; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* Floating Particles */
+        #animation-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 900; }
+        .particle { position: absolute; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
+        /* Content Styling */
+        .hero { height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .hero h1 { font-size: 3.5rem; color: var(--dark-pink); text-shadow: 2px 2px var(--white); }
+
+        .message-box { 
+            background: rgba(255, 255, 255, 0.9); border: 2px solid var(--pink);
+            padding: 50px 30px; border-radius: 40px; max-width: 950px; margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+        }
+        .message-box p { font-size: 1.55rem; line-height: 2.2; color: #444; }
+        .highlight { color: var(--dark-pink); font-weight: bold; }
+
+        /* 12 Photo Gallery */
+        .gallery { padding: 40px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; }
+        .img-card { 
+            position: relative; border: 4px solid var(--white); border-radius: 20px; 
+            overflow: hidden; height: 480px; background: #fff; transition: 0.5s; cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        .img-card:hover { transform: translateY(-10px); border-color: var(--pink); box-shadow: 0 15px 35px rgba(255, 20, 147, 0.2); }
+        .img-card img { width: 100%; height: 100%; object-fit: cover; }
+        .img-text { position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, rgba(255, 20, 147, 0.85)); padding: 25px; color: #fff; font-size: 1.35rem; font-weight: bold; }
+
+        /* Popup Panel for 12 Worlds */
+        #place-popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10000; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            transition: 0.5s ease-in-out; background-size: cover; background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* Floating World Overlay Text Frame */
+        .place-overlay-card {
+            background: rgba(0, 0, 0, 0.7); padding: 45px; border-radius: 25px;
+            border: 3px double var(--gold); text-align: center; max-width: 85%;
+            backdrop-filter: blur(5px);
+            animation: floatCard 4s ease-in-out infinite alternate;
+        }
+        .place-title { font-size: 2.2rem; color: #fff; font-weight: bold; margin-bottom: 15px; text-shadow: 2px 2px 5px #000; }
+        
+        .padma-love-quote {
+            font-size: 2.5rem; color: var(--gold); font-weight: bold; line-height: 1.4;
+            text-shadow: 0 0 20px var(--gold), 0 0 40px var(--dark-pink);
+            background: linear-gradient(to right, #ffd700, #ffb6c1, #ffd700);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: blink 1.2s infinite alternate; margin-bottom: 15px;
+        }
+
+        /* Buttons & Extras */
+        .trigger-btn {
+            background: linear-gradient(135deg, var(--dark-pink) 0%, #ff69b4 100%);
+            color: #fff; font-size: 1.5rem; font-weight: bold; padding: 18px 35px; border: 3px solid var(--white); border-radius: 50px;
+            cursor: pointer; margin: 40px 15px; display: inline-block; box-shadow: 0 10px 25px rgba(255, 20, 147, 0.3); transition: 0.3s;
+        }
+        .trigger-btn:hover { transform: scale(1.08); box-shadow: 0 15px 35px rgba(255, 20, 147, 0.5); }
+
+        .secret-content-box {
+            background: rgba(255, 255, 255, 0.96); border: 4px dashed var(--dark-pink);
+            padding: 50px 35px; border-radius: 30px; max-width: 900px; margin: 20px auto 40px auto;
+            box-shadow: 0 20px 50px rgba(255, 20, 147, 0.25); animation: fadeIn 1s ease;
+        }
+        .secret-content-box p { font-size: 1.5rem; line-height: 2.3; color: #333; }
+
+        .diary-box {
+            background: rgba(255, 255, 255, 0.96); border: 4px double var(--gold);
+            padding: 40px 30px; border-radius: 30px; max-width: 900px; margin: 20px auto 80px auto;
+            box-shadow: 0 20px 40px rgba(218, 165, 32, 0.2); animation: fadeIn 1s ease;
+        }
+        .diary-box h2 { color: var(--dark-pink); font-size: 2rem; margin-bottom: 20px; }
+        .diary-box textarea { width: 100%; height: 200px; border: 2px solid var(--pink); border-radius: 15px; padding: 15px; font-size: 1.2rem; resize: none; background: #fffbfd; color: #333; outline: none; }
+        .save-btn { background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%); color: #fff; font-size: 1.2rem; font-weight: bold; padding: 12px 30px; border: 2px solid #fff; border-radius: 50px; cursor: pointer; margin-top: 15px; }
+
+        @keyframes blink { from { transform: scale(0.95); opacity: 0.8; } to { transform: scale(1.03); opacity: 1; } }
+        @keyframes floatCard { from { transform: translateY(0px); } to { transform: translateY(-15px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="surprise-overlay" onclick="openGift()">
+        <div class="opening-box">
+            <div class="opening-text">Love you padmaaaaaahhhhh ❤️✨</div>
+            <p style="color: #ff1493; margin-top: 25px; font-size: 1.5rem; font-style: italic;">"You bring so much beautiful smile candy! 🍬🍭"</p>
+            <p style="color: #444; margin-top: 15px; font-size: 1.1rem;">(Click anywhere, na Bujji! 💍)</p>
+        </div>
+    </div>
+
+    <div id="place-popup" class="hidden" onclick="closePlacePopup()">
+        <div class="place-overlay-card">
+            <div class="place-title" id="popup-place-title">Beautiful Place</div>
+            <div class="padma-love-quote" id="popup-love-quote">Love Line</div>
+            <p style="color: rgba(255,255,255,0.8); font-size: 1rem;">(Click anywhere to return to Gallery 🌎)</p>
+        </div>
+    </div>
+
+    <audio id="bgm" src="ammayi_song.mp3" loop preload="auto"></audio>
+
+    <div id="main-content" class="hidden">
+        <div id="animation-container"></div>
+        
+        <section class="hero">
+            <h1>Happy Birthday, Padma! ❤️</h1>
+        </section>
+
+        <section class="message-box">
+            <p>
+                <span class="highlight">Happy birthday to you</span> my little baby girl 💕💖 na bujimunda na mudhula pellamah na chitti shrimati na putikiiiiiii Bangaram 🦌🦚 <br><br>
+                Edi manan cheskuney ni <span class="highlight">2nd birthday</span>. Last year ki Ee year ki chala marai manam kuda chala maram elaney prathi year bday luu cheskundamuuuu. 💍<br><br>
+                Manam ela kalipi ni Prema tho patu <span class="highlight">ni life ni kuda na chethulo petu</span> happy ga chuskunta namakam tho ni cheyaa echi chudu.<br><br>
+                Ee prapancham lo mana Prema entha important ani telidu kani <span class="highlight">Naku nuvu important</span>, ni tarvta ey emina! <br><br>
+                <span class="highlight">III loveee youuuuuuu sooooo muchhhhhhhhhhhhhhh</span> putikiiiiiii na ruhi! Eyy nuvu na athamah 🫠🫴💍<br><br>
+                <span class="highlight">Dha pelli cheskundam fast ga! 😘😘😘</span>
+            </p>
+        </section>
+
+        <p style="font-size: 1.3rem; color: var(--dark-pink); font-weight: bold; margin-bottom: -20px; animation: pulse 1.5s infinite;">
+            ✨ (💡 Hint: Click on any photo to see my love lines in real fantasy worlds! 🌟)
+        </p>
+
+        <section class="gallery">
+            <div class="img-card" onclick="openPlaceWorld(1)"><img src="p1.jpeg" onerror="this.src='p1.jpg'"><div class="img-text">na ruhi bangaram ra nuvu ❤️🥰</div></div>
+            <div class="img-card" onclick="openPlaceWorld(2)"><img src="p2.jpeg" onerror="this.src='p2.jpg'"><div class="img-text">ni kalalo chusthu brathikestha 🥺✨</div></div>
+            <div class="img-card" onclick="openPlaceWorld(3)"><img src="p3.jpeg" onerror="this.src='p3.jpg'"><div class="img-text">nuvu lekundah nenu undlenu dudu ga 🫂💖</div></div>
+            <div class="img-card" onclick="openPlaceWorld(4)"><img src="p4.jpeg" onerror="this.src='p4.jpg'"><div class="img-text">ni prathi mudhu lo ni prema bavuntadi 💋🌹</div></div>
+            <div class="img-card" onclick="openPlaceWorld(5)"><img src="p5.jpeg" onerror="this.src='p5.jpg'"><div class="img-text">na bujimundah putiki ga 🤗🍭</div></div>
+            <div class="img-card" onclick="openPlaceWorld(6)"><img src="p6.jpeg" onerror="this.src='p6.jpg'"><div class="img-text">na prapancham ey nuvu ruhi 🌎💗</div></div>
+            <div class="img-card" onclick="openPlaceWorld(7)"><img src="p7.jpeg" onerror="this.src='p7.jpg'"><div class="img-text">na wife material chichu ga 👰💍</div></div>
+            <div class="img-card" onclick="openPlaceWorld(8)"><img src="p8.jpeg" onerror="this.src='p8.jpg'"><div class="img-text">eppatiki natho undipo jevitham atha ♾️💞</div></div>
+            <div class="img-card" onclick="openPlaceWorld(9)"><img src="p9.jpeg" onerror="this.src='p9.jpg'"><div class="img-text">na prema lo ni pranam na pranam la chuskunta 💎❤️</div></div>
+            <div class="img-card" onclick="openPlaceWorld(10)"><img src="p10.jpeg" onerror="this.src='p10.jpg'"><div class="img-text">i love you so much my bday girl 🎂🎁💖</div></div>
+            <div class="img-card" onclick="openPlaceWorld(11)"><img src="p11.jpeg" onerror="this.src='p11.jpg'"><div class="img-text">every day with you i need 💖✨</div></div>
+            <div class="img-card" onclick="openPlaceWorld(12)"><img src="p12.jpeg" onerror="this.src='p12.jpg'"><div class="img-text">my dreams and goals only with you 🥰👰</div></div>
+        </section>
+
+        <div style="margin-top: 30px;">
+            <div class="trigger-btn" id="lock-btn" onclick="revealSecret()">Secret Message for Ruhi 🤫❤️</div>
+            <div class="trigger-btn" id="diary-btn" onclick="revealDiary()">Our Future Diary 📝🔒</div>
+        </div>
+
+        <section class="secret-content-box hidden" id="secret-card">
+            <p>
+                "Nuvu antey naku picha estam <span class="highlight">padmaaaaahhhh</span>... 🫀❤️ entha antey nuvu ni friends tho unna bayam ekkada nakanna valu ekkkuva close untavo ani.. 🥺💔 andhukey emo nuvu natho matramey undali ani anukunta. <br><br>
+                Aa bayam vala emo nuvu antey antha pichi naku, ah bayam vala emo ni midha na prema pichi la anipisthundi emo.. 😭🔗 Na restrictions niku baramga chiraku ga undachu kani na bayam nadi, na prema padmaaaaahhh! 🥺🔒<br><br>
+                Nuvu na pellam.. na estam! Nenu ni mogudini ey! 🤵👰💍 Entha bayam untadi naku ni gurinchi, andhukey entha ala chuskunta ninu.. <br><br>
+                <span class="highlight">Iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii loveeeeeeeeeeeeeeeeee youuuuuuuuuuuuuuuuuuuuuuu sooooooooooooooooooooooooooo muchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh padmaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhh! 💖🔥❤️</span><br><br>
+                Na pranam ra nuvu na ruhi, once again happy birthday raa candy gaa eppatiki happy ga undhamu! 🎂🍬🍭🍭✨"
+            </p>
+        </section>
+
+        <section class="diary-box hidden" id="diary-card">
+            <h2>Our Future Memories & Notes 📝✨</h2>
+            <p style="font-size: 1.1rem; color: #666; margin-bottom: 15px;">Gowtham & Padma, future lo me sweet moments ni ikkada raskondi. (Auto-saved permanently!)</p>
+            <textarea id="diary-input" placeholder="Ikkada me future goals, promises leda kotha memories ni type chesi save cheskondi bangaram... 🥰👇"></textarea>
+            <br>
+            <button class="save-btn" onclick="saveNote()">Save Our Memory 💖</button>
+        </section>
+    </div>
+
+    <script>
+        // Fixed 3rd image path with reliable dark purple high-quality aesthetic link
+        const beautifulWorlds = {
+            1: { title: "🌌 Deep Cosmic Space World", quote: "Ee prapancham unnantha varaku nuvve na pranam Padmaaaaahhhhh! ✨🌌", bg: "url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=1920')", icons: ['✨', '⭐', '🌕'] },
+            2: { title: "🌲 Enchanted Magic Glow Forest", quote: "Ni chirunavve na jeevithaniki eppatiki oka velugu Ruhi! 🌸🍃", bg: "url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1920')", icons: ['🌸', '🍃', '🦋'] },
+            3: { title: "💎 Sparkling Purple Crystal Cave", quote: "Na gunde gullo eppatiki dachi pettukune koti manivi nuvve! 💎💜", bg: "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920')", icons: ['✨', '💎', '🔮'] },
+            4: { title: "🌊 Deep Blue Ocean Royal Palace", quote: "Na prema samudram kanta lothainadi na bangaram! 🌊🐬❤️", bg: "url('https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=1920')", icons: ['🐬', '🐚', '🧜‍♀️'] },
+            5: { title: "🌅 Golden Sunset Romantic Beach", bg: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920')", quote: "Prathi sandhya ni thogene gadavalani undi na putiki! 🌅💖", icons: ['💖', '☀️', '🌴'] },
+            6: { title: "🏰 Mystical Floating Cloud Castle", quote: "Nuvve na prema lokaaniki rani vi na chitti shrimati! 🏰👑", bg: "url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1920')", icons: ['☁️', '🕊️', '👑'] },
+            7: { title: "🍄 Neon Glowing Mushroom Valley", quote: "Ee lokam lo evaru lenna naku nuvve na prapancham! 🌎💗", bg: "url('https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?q=80&w=1920')", icons: ['🍀', '💡', '🌈'] },
+            8: { title: "🌸 Sweet Pink Sakura Blossom Garden", quote: "Ni swasa lo ni prema lo nenu eppatiki brathikeyali! 💋🌹🌸", bg: "url('https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?q=80&w=1920')", icons: ['🌸', '🌺', '🍃'] },
+            9: { title: "🏛️ Ancient Vintage Cinema Library", quote: "Mana janta eppatiki oka sweet movie la undipovali! ⏳🎬🍿", bg: "url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1920')", icons: ['📜', '📚', '⏳'] },
+            10: { title: "🪐 Futuristic Aurora Polar Ice World", quote: "Entha dhooram unna na gunde chappudu nuvve na candy! ❄️💞", bg: "url('https://images.unsplash.com/photo-1483168527879-c66136b56105?q=80&w=1920')", icons: ['❄️', '⭐', '💎'] },
+            11: { title: "🍬 Sweet Candy & Chocolate Land", quote: "Nuvvu naku chaala teepina smile candy vi na bujimunda! 🍬🍭🥰", bg: "url('https://images.unsplash.com/photo-1581798459219-318e76aecc7b?q=80&w=1920')", icons: ['🍬', '🍭', '🧁'] },
+            12: { title: "💍 Eternal Wedding Ring Paradise", quote: "Dha fast ga pelli cheskundam... Nenu ni mogudini, nuvve na wife! 🤵👰💍", bg: "url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1920')", icons: ['💍', '👰', '🤵', '❤️'] }
+        };
+
+        function openGift() {
+            const overlay = document.getElementById('surprise-overlay');
+            const main = document.getElementById('main-content');
+            const music = document.getElementById('bgm');
+
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                main.classList.remove('hidden');
+                music.play().catch(e => console.log("Audio trigger active"));
+                startFalling(['❤️', '💖', '💞', '💗', '🌹', '✨', '💍', '🌸', '🍬', '🍭', '🥰']);
+                
+                if(localStorage.getItem('padma_notes')) {
+                    document.getElementById('diary-input').value = localStorage.getItem('padma_notes');
+                }
+            }, 1000);
+        }
+
+        let particleInterval;
+        function startFalling(icons) {
+            if(particleInterval) clearInterval(particleInterval);
+            const container = document.getElementById('animation-container');
+            
+            particleInterval = setInterval(() => {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerText = icons[Math.floor(Math.random() * icons.length)];
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.fontSize = (Math.random() * 20 + 25) + 'px';
+                p.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 4000);
+            }, 80);
+        }
+
+        function openPlaceWorld(id) {
+            const world = beautifulWorlds[id];
+            const popup = document.getElementById('place-popup');
+            
+            document.getElementById('popup-place-title').innerText = world.title;
+            document.getElementById('popup-love-quote').innerHTML = world.quote;
+            popup.style.backgroundImage = world.bg;
+            popup.classList.remove('hidden');
+            
+            startFalling(world.icons.concat(['❤️', '✨'])); 
+        }
+
+        function closePlacePopup() {
+            document.getElementById('place-popup').classList.add('hidden');
+            startFalling(['❤️', '💖', '💞', '💗', '🌹', '✨', '💍', '🌸', '🍬', '🍭', '🥰']);
+        }
+
+        function revealSecret() {
+            document.getElementById('lock-btn').style.display = 'none';
+            document.getElementById('secret-card').classList.remove('hidden');
+            startFalling(['🦋', '🦋', '💖', '🦋', '✨', '❤️', '🦋']);
+            setTimeout(() => { document.getElementById('secret-card').scrollIntoView({ behavior: 'smooth' }); }, 200);
+        }
+
+        function revealDiary() {
+            document.getElementById('diary-btn').style.display = 'none';
+            document.getElementById('diary-card').classList.remove('hidden');
+            startFalling(['📝', '✨', '💖', '🌸', '💫']);
+            setTimeout(() => { document.getElementById('diary-card').scrollIntoView({ behavior: 'smooth' }); }, 200);
+        }
+
+        function saveNote() {
+            const textValue = document.getElementById('diary-input').value;
+            localStorage.setItem('padma_notes', textValue);
+            alert("Na Bangaram, me message permanent ga diary lo save aypoyindi! 🥰🔐");
+        }
+    </script>
+</body>
+</html>
